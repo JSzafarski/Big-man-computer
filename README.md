@@ -1,4 +1,4 @@
-````markdown
+
 # Big Man Computer - A Little Man Computer (LMC) Interpreter
 
 ![Language](https://img.shields.io/badge/language-VB.NET-blueviolet.svg)
@@ -84,4 +84,3 @@ For a complete and in-depth understanding of the project's lifecycle, including 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
-````
