@@ -34,81 +34,81 @@ Dim beenpressed As Integer
 Dim start As Boolean
 Dim stopcode As Boolean
 Private Sub Button1_Click(sender As Object, e As EventArgs) Handles
-Button1.Click &#39;Initializes the code
-Call Initialazation()
+	Button1.Click &#39;Initializes the code
+	Call Initialazation()
 End Sub
 Sub Initialazation()
-If start = False Then
-Do Until linecount = (RichTextBox1.Lines.Length) &#39;a loop that reads
-everything entered in the rich text box
-mainarray(linecount) = RichTextBox1.Lines(linecount).ToString &#39; inserts
-each line into the array
-If linecount = 100 Then
-MsgBox(&quot;code length exceeded&quot;)
-Exit Sub
-End If
-linecount = linecount + 1
-Loop
-
-Me.Text = &quot;Big man computer (Running code....)&quot;
-If linecount = 0 Then
-MsgBox(&quot;Enter some code&quot;)
-Call Reset()
-Exit Sub
-End If
-linecount = linecount - 1
-Bdecide = True
-Do Until command = &quot;HLT&quot; Or command = &quot;COB&quot; &#39; this loop will repeat
-unitl it finds &quot;HLT&quot; command
-Call lexicalAnalisys()
-If linecount = 0 Then
-If command &lt;&gt; &quot;HLT&quot; Or command &lt;&gt; &quot;COB&quot; Then &#39; validation to
-inform the user that they need to insert a &quot;HLT&quot; command
-MsgBox(&quot;No HLT or COB command found&quot;)
-Call Reset() &#39;precedure thet resets all variables to deafult state
-Exit Sub
-End If
-ElseIf command = &quot;DAT&quot; Then &#39; if &quot;HLT&quot; inst reached then ramhandler
-can populate the array with data
-Call RamHandler()
-If notfound = True Then
-Call Reset() &#39;precedure thet resets all variables to deafult state
-Exit Sub
-End If
-VAR = &quot;&quot;
-End If
-linecount = linecount - 1 &#39;decrements the linceount so variables can be
-read from bottom to top
-Loop
-linecount = 0
-Bdecide = False
-
-
-command = &quot;&quot;
-Do Until linecount = (RichTextBox1.Lines.Length) &#39;this loop looks for any
-loops in the code
-Call lexicalAnalisys()
-If command = &quot;&quot; And Len(mainarray(linecount)) &lt;&gt; 0 And
-Mid(mainarray(linecount), 1, 1) &lt;&gt; &quot;/&quot; Then &#39; verfiys whether correct syntax
-been used.
-MsgBox(&quot;Error on line: &quot; &amp; linecount + 1) &#39;Arrays are zero base so +1
-allows to show &quot;one based&quot; loacation of the code
-Call Reset()
-Exit Sub
-Else &#39;assign values to execution paths array on specific linecount value
-executionpaths(linecount, 0) = command
-executionpaths(linecount, 1) = VAR
-executionpaths(linecount, 4) = VARVALUE
-End If
-If command = &quot;ADD&quot; Or command = &quot;SUB&quot; Or command = &quot;LDA&quot; Or
-command = &quot;STA&quot; Or command = &quot;OUT&quot; Then
-Call RamHandler()
-If notfound = True Then
-Call Reset() &#39;procedure thet resets all variables to deafult state
-Exit Sub
-End If
-executionpaths(linecount, 2) = FOUNDlocation &#39;adds a direct adress
-so the variable can be founfd in a array in O(1) time
+	If start = False Then
+		Do Until linecount = (RichTextBox1.Lines.Length) &#39;a loop that reads
+			everything entered in the rich text box
+			mainarray(linecount) = RichTextBox1.Lines(linecount).ToString &#39; inserts
+			each line into the array
+			If linecount = 100 Then
+				MsgBox(&quot;code length exceeded&quot;)
+				Exit Sub
+			End If
+			linecount = linecount + 1
+		Loop
+		
+		Me.Text = &quot;Big man computer (Running code....)&quot;
+		If linecount = 0 Then
+			MsgBox(&quot;Enter some code&quot;)
+			Call Reset()
+			Exit Sub
+		End If
+		linecount = linecount - 1
+		Bdecide = True
+		Do Until command = &quot;HLT&quot; Or command = &quot;COB&quot; &#39; this loop will repeat
+			unitl it finds &quot;HLT&quot; command
+			Call lexicalAnalisys()
+			If linecount = 0 Then
+				If command &lt;&gt; &quot;HLT&quot; Or command &lt;&gt; &quot;COB&quot; Then &#39; validation to
+				inform the user that they need to insert a &quot;HLT&quot; command
+				MsgBox(&quot;No HLT or COB command found&quot;)
+				Call Reset() &#39;precedure thet resets all variables to deafult state
+				Exit Sub
+			End If
+		ElseIf command = &quot;DAT&quot; Then &#39; if &quot;HLT&quot; inst reached then ramhandler
+			can populate the array with data
+			Call RamHandler()
+			If notfound = True Then
+				Call Reset() &#39;precedure thet resets all variables to deafult state
+				Exit Sub
+			End If
+			VAR = &quot;&quot;
+		End If
+		linecount = linecount - 1 &#39;decrements the linceount so variables can be
+		read from bottom to top
+	Loop
+	linecount = 0
+	Bdecide = False
+	
+	
+	command = &quot;&quot;
+	Do Until linecount = (RichTextBox1.Lines.Length) &#39;this loop looks for any
+		loops in the code
+		Call lexicalAnalisys()
+		If command = &quot;&quot; And Len(mainarray(linecount)) &lt;&gt; 0 And
+		Mid(mainarray(linecount), 1, 1) &lt;&gt; &quot;/&quot; Then &#39; verfiys whether correct syntax
+		been used.
+		MsgBox(&quot;Error on line: &quot; &amp; linecount + 1) &#39;Arrays are zero base so +1
+		allows to show &quot;one based&quot; loacation of the code
+		Call Reset()
+		Exit Sub
+		Else &#39;assign values to execution paths array on specific linecount value
+		executionpaths(linecount, 0) = command
+		executionpaths(linecount, 1) = VAR
+		executionpaths(linecount, 4) = VARVALUE
+	End If
+	If command = &quot;ADD&quot; Or command = &quot;SUB&quot; Or command = &quot;LDA&quot; Or
+	command = &quot;STA&quot; Or command = &quot;OUT&quot; Then
+	Call RamHandler()
+	If notfound = True Then
+		Call Reset() &#39;procedure thet resets all variables to deafult state
+		Exit Sub
+	End If
+	executionpaths(linecount, 2) = FOUNDlocation &#39;adds a direct adress
+	so the variable can be founfd in a array in O(1) time
 End If
 linecount = linecount + 1
 command = &quot;&quot;
